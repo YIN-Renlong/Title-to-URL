@@ -1,0 +1,55 @@
+<body>
+    <form id="input-form">
+        <label for="link">Link address:</label>
+        <input type="text" id="link" name="link"><br>
+
+        <label for="title">Article title:</label>
+        <input type="text" id="title" name="title"><br>
+
+        <label for="month">Month:</label>
+        <input type="text" id="month" name="month"><br>
+
+        <label for="day">Day:</label>
+        <input type="text" id="day" name="day"><br>
+
+        <label for="year">Year:</label>
+        <input type="text" id="year" name="year"><br>
+
+        <input type="submit" value="Generate URL">
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('input-form');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const link = form.link.value.trim();
+            const title = form.title.value.trim();
+            const month = form.month.value.trim();
+            const day = form.day.value.trim();
+            const year = form.year.value.trim();
+
+            const url = normalizeUrl(title, year, month, day);
+
+            resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
+        });
+
+        function normalizeUrl(title, year, month, day) {
+            // Replace any non-alphanumeric characters with a hyphen
+            title = title.replace(/[^a-zA-Z0-9']+/, '-');
+            // Remove any consecutive hyphens
+            title = title.replace(/--+/g, '-');
+            // Remove any leading or trailing hyphens
+            title = title.replace(/^-|-$/g, '');
+            // Convert the title to lowercase
+            title = title.toLowerCase();
+            // Construct the URL using the provided year, month, and day
+            url = `https://www.website.com/${year}/${month.padStart(2, '0')}/${day.padStart(2, '0')}/${title}/`;
+            return url;
+        }
+    </script>
+</body>
