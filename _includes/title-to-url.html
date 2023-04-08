@@ -1,4 +1,4 @@
-<body>
+<div>
     <form id="input-form">
         <label for="link">Link address:</label>
         <input type="text" id="link" name="link"><br>
@@ -7,13 +7,27 @@
         <input type="text" id="title" name="title"><br>
 
         <label for="month">Month:</label>
-        <input type="text" id="month" name="month"><br>
+        <select id="month" name="month">
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select><br>
 
         <label for="day">Day:</label>
-        <input type="text" id="day" name="day"><br>
-
-        <label for="year">Year:</label>
-        <input type="text" id="year" name="year"><br>
+        <select id="day" name="day">
+            {% for day in (1..31) %}
+                <option value="{{ day | prepend: '0' | slice: -2 }}">{{ day }}</option>
+            {% endfor %}
+        </select><br>
 
         <input type="submit" value="Generate URL">
     </form>
@@ -29,9 +43,9 @@
 
             const link = form.link.value.trim();
             const title = form.title.value.trim();
-            const month = form.month.value.trim();
-            const day = form.day.value.trim();
-            const year = form.year.value.trim();
+            const month = form.month.value;
+            const day = form.day.value;
+            const year = (new Date()).getFullYear();
 
             const url = normalizeUrl(title, year, month, day);
 
@@ -48,8 +62,8 @@
             // Convert the title to lowercase
             title = title.toLowerCase();
             // Construct the URL using the provided year, month, and day
-            url = `https://www.website.com/${year}/${month.padStart(2, '0')}/${day.padStart(2, '0')}/${title}/`;
+            url = `https://www.website.com/${year}/${month}/${day}/${title}/`;
             return url;
         }
     </script>
-</body>
+</div>
