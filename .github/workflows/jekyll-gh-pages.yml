@@ -1,6 +1,6 @@
 title: Title to URL
 description: A tool to generate URLs from article titles
-theme: Architect
+remote_theme: pages-themes/architect@v0.2.0
 
 plugins:
   - jekyll-feed
