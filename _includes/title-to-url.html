@@ -1,4 +1,5 @@
 <div>
+<div>
     <form id="input-form">
         <label for="link">Link address:</label>
         <input type="text" id="link" name="link"><br>
@@ -6,6 +7,8 @@
         <label for="title">Article title:</label>
         <input type="text" id="title" name="title"><br>
 
+        <input type="radio" id="useDate" name="option" value="date" checked>
+        <label for="useDate">Use Date</label><br>
         <label for="month">Month:</label>
         <select id="month" name="month">
             <option value="01">January</option>
@@ -29,14 +32,30 @@
             {% endfor %}
         </select><br>
 
+        <input type="radio" id="useSubdirectory" name="option" value="subdirectory">
+        <label for="useSubdirectory">Use Subdirectory</label><br>
+        <label for="subdirectory">Subdirectory:</label>
+        <input type="text" id="subdirectory" name="subdirectory" disabled><br>
+
         <input type="submit" value="Generate URL">
     </form>
 
     <div id="result"></div>
 
-<script>
+    <script>
     const form = document.getElementById('input-form');
     const resultDiv = document.getElementById('result');
+    const useDate = document.getElementById('useDate');
+    const useSubdirectory = document.getElementById('useSubdirectory');
+    const subdirectoryInput = document.getElementById('subdirectory');
+
+    useDate.addEventListener('change', () => {
+        subdirectoryInput.disabled = true;
+    });
+
+    useSubdirectory.addEventListener('change', () => {
+        subdirectoryInput.disabled = false;
+    });
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -46,13 +65,15 @@
         const month = form.month.value;
         const day = form.day.value;
         const year = (new Date()).getFullYear();
+        const subdirectory = form.subdirectory.value.trim();
+        const selectedOption = document.querySelector('input[name="option"]:checked').value;
 
-        const url = normalizeUrl(title, year, month, day);
+        const url = normalizeUrl(title, year, month, day, subdirectory, selectedOption);
 
         resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
     });
 
-    function normalizeUrl(title, year, month, day) {
+    function normalizeUrl(title, year, month, day, subdirectory, selectedOption) {
         // Replace any non-alphanumeric characters with a hyphen, except for apostrophes
         title = title.replace(/[^\w\s']+/g, '-');
         // Replace apostrophes with an empty string
@@ -65,9 +86,17 @@
         title = title.replace(/^-|-$/g, '');
         // Convert the title to lowercase
         title = title.toLowerCase();
-        // Construct the URL using the provided year, month, and day
-        url = `https://www.website.com/${year}/${month}/${day}/${title}/`;
+
+        // Construct the URL based on the selected option
+        let url;
+        if (selectedOption === 'date') {
+            url = `https://www.website.com/${year}/${month}/${day}/${title}/`;
+        } else {
+            url = `https://www.website.com/${subdirectory}/${title}/`;
+        }
+
         return url;
     }
 </script>
+
 </div>
