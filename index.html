@@ -5,7 +5,7 @@
 </head>
 <body>
   <h1>Title to URL</h1>
-  <form id="url-form">
+  <form>
     <div>
       <label for="link_address">Link Address:</label>
       <input type="text" id="link_address" name="link_address" value="https://www.website.com">
@@ -32,17 +32,18 @@
   </form>
   <div id="url-result"></div>
   <script>
-    const form = document.getElementById('url-form');
+    const form = document.querySelector('form');
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const formData = new FormData(form);
-      const response = await fetch('/normalize_url', {
-        method: 'POST',
-        body: formData
-      });
-      const data = await response.json();
+      const link_address = document.querySelector('#link_address').value;
+      const title = document.querySelector('#title').value;
+      const year = document.querySelector('#year').value;
+      const month = document.querySelector('#month').value.padStart(2, '0');
+      const day = document.querySelector('#day').value.padStart(2, '0');
+      const slug = title.toLowerCase().replace(/ /g, '-');
+      const url = `${link_address}/${year}/${month}/${day}/${slug}/`;
       const resultDiv = document.getElementById('url-result');
-      resultDiv.innerText = `The normalized URL is: ${data.url}`;
+      resultDiv.innerText = `The normalized URL is: ${url}`;
     });
   </script>
 </body>
