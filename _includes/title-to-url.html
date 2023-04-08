@@ -1,116 +1,76 @@
 <div>
-    <form id="input-form">
-        <label for="domain">Domain address:</label>
-        <input type="text" id="domain" name="domain" placeholder="www.example.com" required><br>
+<form id="input-form">
+    <label for="domain">Domain address:</label>
+    <input type="text" id="domain" name="domain" placeholder="www.example.com" required><br>
 
-        <label for="title">Article title:</label>
-        <input type="text" id="title" name="title" required><br>
+    <label for="title">Article title:</label>
+    <input type="text" id="title" name="title" required><br>
 
-        <input type="radio" id="useDate" name="option" value="date" checked>
-        <label for="useDate">Use Date</label><br>
-        <label for="year">Year:</label>
-        <select id="year" name="year">
-            {% for year in (2023..2030) %}
-            <option value="{{ year }}">{{ year }}</option>
-            {% endfor %}
-        </select><br>
+    <input type="radio" id="useDate" name="option" value="date" checked>
+    <label for="useDate">Use Date</label><br>
+    <label for="year">Year:</label>
+    <select id="year" name="year">
+        {% for year in (2023..2030) %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+    </select><br>
 
-        <label for="month">Month:</label>
-        <select id="month" name="month">
-            {% for month in (1..12) %}
-            <option value="{{ month | prepend: '0' | slice: -2 }}">{{ month }}</option>
-            {% endfor %}
-        </select><br>
+    <label for="month">Month:</label>
+    <select id="month" name="month">
+        {% for month in (1..12) %}
+        <option value="{{ month | prepend: '0' | slice: -2 }}">{{ month }}</option>
+        {% endfor %}
+    </select><br>
 
-        <label for="day">Day:</label>
-        <select id="day" name="day">
-            {% for day in (1..31) %}
-            <option value="{{ day | prepend: '0' | slice: -2 }}">{{ day }}</option>
-            {% endfor %}
-        </select><br>
+    <label for="day">Day:</label>
+    <select id="day" name="day">
+        {% for day in (1..31) %}
+        <option value="{{ day | prepend: '0' | slice: -2 }}">{{ day }}</option>
+        {% endfor %}
+    </select><br>
 
-        <input type="radio" id="useSubdirectory" name="option" value="subdirectory">
-        <label for="useSubdirectory">Use Subdirectory</label><br>
-        <label for="subdirectory">Subdirectory:</label>
-        <input type="text" id="subdirectory" name="subdirectory" disabled><br>
+    <input type="radio" id="useSubdirectory" name="option" value="subdirectory">
+    <label for="useSubdirectory">Use Subdirectory</label><br>
+    <label for="subdirectory">Subdirectory:</label>
+    <input type="text" id="subdirectory" name="subdirectory" disabled><br>
 
-        <input type="submit" value="Generate URL">
-    </form>
+    <input type="submit" value="Generate URL">
+</form>
 
-    <div id="result"></div>
+<div id="result"></div>
 
-    <script>
-        const form = document.getElementById('input-form');
-        const resultDiv = document.getElementById('result');
-        const useDate = document.getElementById('useDate');
-        const useSubdirectory = document.getElementById('useSubdirectory');
-        const subdirectoryInput = document.getElementById('subdirectory');
+<script>
+    const form = document.getElementById('input-form');
+    const resultDiv = document.getElementById('result');
+    const useDate = document.getElementById('useDate');
+    const useSubdirectory = document.getElementById('useSubdirectory');
+    const subdirectoryInput = document.getElementById('subdirectory');
 
-        useDate.addEventListener('change', () => {
-            subdirectoryInput.disabled = true;
-        });
+    useDate.addEventListener('change', () => {
+        subdirectoryInput.disabled = true;
+    });
 
-        useSubdirectory.addEventListener('change', () => {
-            subdirectoryInput.disabled = false;
-        });
+    useSubdirectory.addEventListener('change', () => {
+        subdirectoryInput.disabled = false;
+    });
 
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-            const domain = form.domain.value.trim();
-            const title = form.title.value.trim();
-            const year = form.year.value;
-            const month = form.month.value;
-            const day = form.day.value;
-            const subdirectory = form.subdirectory.value.trim();
-            const selectedOption = document.querySelector('input[name="option"]:checked').value;
+        const domain = form.domain.value.trim();
+        const title = form.title.value.trim();
+        const year = form.year.value;
+        const month = form.month.value;
+        const day = form.day.value;
+        const subdirectory = form.subdirectory.value.trim();
+        const selectedOption = document.querySelector('input[name="option"]:checked').value;
 
-            const url = normalizeUrl(domain, title, year, month, day, subdirectory, selectedOption);
+        const url = normalizeUrl(domain, title, year, month, day, subdirectory, selectedOption);
 
-            resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
-        });
+        resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
+    });
 
         function normalizeUrl(domain, title, year, month, day, subdirectory, selectedOption) {
-            // Replace any non-alphanumeric characters with a hyphen, except for apostrophes
-            title = title.replace(/[^\w\s']+/g, '-');
-            // Replace apostrophes with an empty string
-            title = title.replace(/'/g, '');
-            // Replace whitespace with a hyphen
-            title = title.replace(/\s+/g, '-');
-            // Remove any consecutive hyphens
-            
-            <script>
-            const form = document.getElementById('input-form');
-            const resultDiv = document.getElementById('result');
-            const useDate = document.getElementById('useDate');
-            const useSubdirectory = document.getElementById('useSubdirectory');
-            const subdirectoryInput = document.getElementById('subdirectory');
-
-            useDate.addEventListener('change', () => {
-                subdirectoryInput.disabled = true;
-            });
-
-            useSubdirectory.addEventListener('change', () => {
-                subdirectoryInput.disabled = false;
-            });
-
-            form.addEventListener('submit', (event) => {
-                event.preventDefault();
-
-                const domain = form.domain.value.trim();
-                const title = form.title.value.trim();
-                const year = form.year.value;
-                const month = form.month.value;
-                const day = form.day.value;
-                const subdirectory = form.subdirectory.value.trim();
-                const selectedOption = document.querySelector('input[name="option"]:checked').value;
-
-                const url = normalizeUrl(domain, title, year, month, day, subdirectory, selectedOption);
-
-                resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
-            });
-
-            function normalizeUrl(domain, title, year, month, day, subdirectory, selectedOption) {
         // Replace any non-alphanumeric characters with a hyphen, except for apostrophes
         title = title.replace(/[^\w\s']+/g, '-');
         // Replace apostrophes with an empty string
