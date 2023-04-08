@@ -1,79 +1,79 @@
 <div>
-<div>
-    <form id="input-form">
-        <label for="link">Link address:</label>
-        <input type="text" id="link" name="link"><br>
+    <div>
+        <form id="input-form">
+            <label for="link">Link address:</label>
+            <input type="text" id="link" name="link"><br>
 
-        <label for="title">Article title:</label>
-        <input type="text" id="title" name="title"><br>
+            <label for="title">Article title:</label>
+            <input type="text" id="title" name="title"><br>
 
-        <input type="radio" id="useDate" name="option" value="date" checked>
-        <label for="useDate">Use Date</label><br>
-        <label for="month">Month:</label>
-        <select id="month" name="month">
-            <option value="01">January</option>
-            <option value="02">February</option>
-            <option value="03">March</option>
-            <option value="04">April</option>
-            <option value="05">May</option>
-            <option value="06">June</option>
-            <option value="07">July</option>
-            <option value="08">August</option>
-            <option value="09">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-        </select><br>
+            <input type="radio" id="useDate" name="option" value="date" checked>
+            <label for="useDate">Use Date</label><br>
+            <label for="month">Month:</label>
+            <select id="month" name="month">
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select><br>
 
-        <label for="day">Day:</label>
-        <select id="day" name="day">
-            {% for day in (1..31) %}
+            <label for="day">Day:</label>
+            <select id="day" name="day">
+                {% for day in (1..31) %}
                 <option value="{{ day | prepend: '0' | slice: -2 }}">{{ day }}</option>
-            {% endfor %}
-        </select><br>
+                {% endfor %}
+            </select><br>
 
-        <input type="radio" id="useSubdirectory" name="option" value="subdirectory">
-        <label for="useSubdirectory">Use Subdirectory</label><br>
-        <label for="subdirectory">Subdirectory:</label>
-        <input type="text" id="subdirectory" name="subdirectory" disabled><br>
+            <input type="radio" id="useSubdirectory" name="option" value="subdirectory">
+            <label for="useSubdirectory">Use Subdirectory</label><br>
+            <label for="subdirectory">Subdirectory:</label>
+            <input type="text" id="subdirectory" name="subdirectory" disabled><br>
 
-        <input type="submit" value="Generate URL">
-    </form>
+            <input type="submit" value="Generate URL">
+        </form>
 
-    <div id="result"></div>
+        <div id="result"></div>
 
-    <script>
-    const form = document.getElementById('input-form');
-    const resultDiv = document.getElementById('result');
-    const useDate = document.getElementById('useDate');
-    const useSubdirectory = document.getElementById('useSubdirectory');
-    const subdirectoryInput = document.getElementById('subdirectory');
+        <script>
+            const form = document.getElementById('input-form');
+            const resultDiv = document.getElementById('result');
+            const useDate = document.getElementById('useDate');
+            const useSubdirectory = document.getElementById('useSubdirectory');
+            const subdirectoryInput = document.getElementById('subdirectory');
 
-    useDate.addEventListener('change', () => {
-        subdirectoryInput.disabled = true;
-    });
+            useDate.addEventListener('change', () => {
+                subdirectoryInput.disabled = true;
+            });
 
-    useSubdirectory.addEventListener('change', () => {
-        subdirectoryInput.disabled = false;
-    });
+            useSubdirectory.addEventListener('change', () => {
+                subdirectoryInput.disabled = false;
+            });
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
 
-        const link = form.link.value.trim();
-        const title = form.title.value.trim();
-        const month = form.month.value;
-        const day = form.day.value;
-        const year = (new Date()).getFullYear();
-        const subdirectory = form.subdirectory.value.trim();
-        const selectedOption = document.querySelector('input[name="option"]:checked').value;
+                const link = form.link.value.trim();
+                const title = form.title.value.trim();
+                const month = form.month.value;
+                const day = form.day.value;
+                const year = (new Date()).getFullYear();
+                const subdirectory = form.subdirectory.value.trim();
+                const selectedOption = document.querySelector('input[name="option"]:checked').value;
 
-        const url = normalizeUrl(title, year, month, day, subdirectory, selectedOption);
+                const url = normalizeUrl(title, year, month, day, subdirectory, selectedOption);
 
-        resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
-    });
+                resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
+            });
 
-    function normalizeUrl(title, year, month, day, subdirectory, selectedOption) {
+            function normalizeUrl(title, year, month, day, subdirectory, selectedOption) {
         // Replace any non-alphanumeric characters with a hyphen, except for apostrophes
         title = title.replace(/[^\w\s']+/g, '-');
         // Replace apostrophes with an empty string
@@ -98,5 +98,4 @@
         return url;
     }
 </script>
-
 </div>
