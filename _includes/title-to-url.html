@@ -1,76 +1,150 @@
-<div>
-<form id="input-form">
-    <label for="domain">Domain address:</label>
-    <input type="text" id="domain" name="domain" placeholder="www.example.com" required><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title to URL Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
 
-    <label for="title">Article title:</label>
-    <input type="text" id="title" name="title" required><br>
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
 
-    <input type="radio" id="useDate" name="option" value="date" checked>
-    <label for="useDate">Use Date</label><br>
-    <label for="year">Year:</label>
-    <select id="year" name="year">
-        {% for year in (2023..2030) %}
-        <option value="{{ year }}">{{ year }}</option>
-        {% endfor %}
-    </select><br>
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    <label for="month">Month:</label>
-    <select id="month" name="month">
-        {% for month in (1..12) %}
-        <option value="{{ month | prepend: '0' | slice: -2 }}">{{ month }}</option>
-        {% endfor %}
-    </select><br>
+        label {
+            display: inline-block;
+            width: 150px;
+        }
 
-    <label for="day">Day:</label>
-    <select id="day" name="day">
-        {% for day in (1..31) %}
-        <option value="{{ day | prepend: '0' | slice: -2 }}">{{ day }}</option>
-        {% endfor %}
-    </select><br>
+        input, select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
 
-    <input type="radio" id="useSubdirectory" name="option" value="subdirectory">
-    <label for="useSubdirectory">Use Subdirectory</label><br>
-    <label for="subdirectory">Subdirectory:</label>
-    <input type="text" id="subdirectory" name="subdirectory" disabled><br>
+        input[type="radio"] {
+            width: auto;
+            margin-left: 150px;
+        }
 
-    <input type="submit" value="Generate URL">
-</form>
+        input[type="submit"] {
+            width: auto;
+            padding: 8px 20px;
+            background-color: #007BFF;
+            border: none;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
 
-<div id="result"></div>
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
 
-<script>
-    const form = document.getElementById('input-form');
-    const resultDiv = document.getElementById('result');
-    const useDate = document.getElementById('useDate');
-    const useSubdirectory = document.getElementById('useSubdirectory');
-    const subdirectoryInput = document.getElementById('subdirectory');
+        #result {
+            margin-top: 30px;
+            text-align: center;
+        }
 
-    useDate.addEventListener('change', () => {
-        subdirectoryInput.disabled = true;
-    });
+        #result a {
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Title to URL Generator</h1>
+        <form id="input-form">
+            <label for="domain">Domain address:</label>
+            <input type="text" id="domain" name="domain" placeholder="www.example.com" required><br>
 
-    useSubdirectory.addEventListener('change', () => {
-        subdirectoryInput.disabled = false;
-    });
+            <label for="title">Article title:</label>
+            <input type="text" id="title" name="title" required><br>
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
+            <input type="radio" id="useDate" name="option" value="date" checked>
+            <label for="useDate">Use Date</label><br>
+            <label for="year">Year:</label>
+            <select id="year" name="year">
+                {% for year in (2023..2030) %}
+                <option value="{{ year }}">{{ year }}</option>
+                {% endfor %}
+            </select><br>
 
-        const domain = form.domain.value.trim();
-        const title = form.title.value.trim();
-        const year = form.year.value;
-        const month = form.month.value;
-        const day = form.day.value;
-        const subdirectory = form.subdirectory.value.trim();
-        const selectedOption = document.querySelector('input[name="option"]:checked').value;
+            <label for="month">Month:</label>
+            <select id="month" name="month">
+                {% for month in (1..12) %}
+                <option value="{{ month | prepend: '0' | slice: -2 }}">{{ month }}</option>
+                {% endfor %}
+            </select><br>
 
-        const url = normalizeUrl(domain, title, year, month, day, subdirectory, selectedOption);
+            <label for="day">Day:</label>
+            <select id="day" name="day">
+                {% for day in (1..31) %}
+                <option value="{{ day | prepend: '0' | slice: -2 }}">{{ day }}</option>
+                {% endfor %}
+            </select><br>
 
-        resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
-    });
+            <input type="radio" id="useSubdirectory" name="option" value="subdirectory">
+            <label for="useSubdirectory">Use Subdirectory</label><br>
+            <label for="subdirectory">Subdirectory:</label>
+            <input type="text" id="subdirectory" name="subdirectory" disabled><br>
 
-        function normalizeUrl(domain, title, year, month, day, subdirectory, selectedOption) {
+            <input type="submit" value="Generate URL">
+        </form>
+
+        <div id="result"></div>
+
+        <script>
+            const form = document.getElementById('input-form');
+            const resultDiv = document.getElementById('result');
+            const useDate = document.getElementById('useDate');
+            const useSubdirectory = document.getElementById('useSubdirectory');
+            const subdirectoryInput = document.getElementById('subdirectory');
+
+            useDate.addEventListener('change', () => {
+                subdirectoryInput.disabled = true;
+            });
+
+            useSubdirectory.addEventListener('change', () => {
+                subdirectoryInput.disabled = false;
+            });
+
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const domain = form.domain.value.trim();
+                const title = form.title.value.trim();
+                const year = form.year.value;
+                const month = form.month.value;
+                const day = form.day.value;
+                const subdirectory = form.subdirectory.value.trim();
+                const selectedOption = document.querySelector('input[name="option"]:checked').value;
+
+                const url = normalizeUrl(domain, title, year, month, day, subdirectory, selectedOption);
+
+                resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
+            });
+
+            function normalizeUrl(domain, title, year, month, day, subdirectory, selectedOption) {
         // Replace any non-alphanumeric characters with a hyphen, except for apostrophes
         title = title.replace(/[^\w\s']+/g, '-');
         // Replace apostrophes with an empty string
@@ -95,3 +169,5 @@
     }
 </script>
 </div>
+</body>
+</html>
