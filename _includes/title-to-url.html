@@ -1,69 +1,36 @@
-<div>
-    <form id="input-form">
-        <label for="link">Link address:</label>
-        <input type="text" id="link" name="link"><br>
+<script>
+    const form = document.getElementById('input-form');
+    const resultDiv = document.getElementById('result');
 
-        <label for="title">Article title:</label>
-        <input type="text" id="title" name="title"><br>
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-        <label for="month">Month:</label>
-        <select id="month" name="month">
-            <option value="01">January</option>
-            <option value="02">February</option>
-            <option value="03">March</option>
-            <option value="04">April</option>
-            <option value="05">May</option>
-            <option value="06">June</option>
-            <option value="07">July</option>
-            <option value="08">August</option>
-            <option value="09">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-        </select><br>
+        const link = form.link.value.trim();
+        const title = form.title.value.trim();
+        const month = form.month.value;
+        const day = form.day.value;
+        const year = (new Date()).getFullYear();
 
-        <label for="day">Day:</label>
-        <select id="day" name="day">
-            {% for day in (1..31) %}
-                <option value="{{ day | prepend: '0' | slice: -2 }}">{{ day }}</option>
-            {% endfor %}
-        </select><br>
+        const url = normalizeUrl(title, year, month, day);
 
-        <input type="submit" value="Generate URL">
-    </form>
+        resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
+    });
 
-    <div id="result"></div>
-
-    <script>
-        const form = document.getElementById('input-form');
-        const resultDiv = document.getElementById('result');
-
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            const link = form.link.value.trim();
-            const title = form.title.value.trim();
-            const month = form.month.value;
-            const day = form.day.value;
-            const year = (new Date()).getFullYear();
-
-            const url = normalizeUrl(title, year, month, day);
-
-            resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
-        });
-
-        function normalizeUrl(title, year, month, day) {
-            // Replace any non-alphanumeric characters with a hyphen
-            title = title.replace(/[^a-zA-Z0-9']+/, '-');
-            // Remove any consecutive hyphens
-            title = title.replace(/--+/g, '-');
-            // Remove any leading or trailing hyphens
-            title = title.replace(/^-|-$/g, '');
-            // Convert the title to lowercase
-            title = title.toLowerCase();
-            // Construct the URL using the provided year, month, and day
-            url = `https://www.website.com/${year}/${month}/${day}/${title}/`;
-            return url;
-        }
-    </script>
-</div>
+    function normalizeUrl(title, year, month, day) {
+        // Replace any non-alphanumeric characters with a hyphen, except for apostrophes
+        title = title.replace(/[^\w\s']+/g, '-');
+        // Replace apostrophes with an empty string
+        title = title.replace(/'/g, '');
+        // Replace whitespace with a hyphen
+        title = title.replace(/\s+/g, '-');
+        // Remove any consecutive hyphens
+        title = title.replace(/--+/g, '-');
+        // Remove any leading or trailing hyphens
+        title = title.replace(/^-|-$/g, '');
+        // Convert the title to lowercase
+        title = title.toLowerCase();
+        // Construct the URL using the provided year, month, and day
+        url = `https://www.website.com/${year}/${month}/${day}/${title}/`;
+        return url;
+    }
+</script>
