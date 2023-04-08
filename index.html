@@ -45,7 +45,7 @@
 
         function normalizeUrl(title, year, month, day) {
             // Replace any non-alphanumeric characters with a hyphen
-            title = title.replace(/[^a-zA-Z0-9]+/g, '-');
+            title = title.replace(/[^a-zA-Z0-9']+/, '-');
             // Remove any consecutive hyphens
             title = title.replace(/--+/g, '-');
             // Remove any leading or trailing hyphens
