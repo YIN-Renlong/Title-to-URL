@@ -44,10 +44,12 @@
         });
 
         function normalizeUrl(title, year, month, day) {
-            // Remove any non-alphanumeric characters from the title
-            title = title.replace(/\W+/g, ' ');
-            // Replace any remaining spaces with hyphens
-            title = title.replace(/\s+/g, '-');
+            // Replace any non-alphanumeric characters with a hyphen
+            title = title.replace(/[^a-zA-Z0-9]+/g, '-');
+            // Remove any consecutive hyphens
+            title = title.replace(/--+/g, '-');
+            // Remove any leading or trailing hyphens
+            title = title.replace(/^-|-$/g, '');
             // Convert the title to lowercase
             title = title.toLowerCase();
             // Construct the URL using the provided year, month, and day
