@@ -4,7 +4,7 @@
     <title>Title to URL</title>
 </head>
 <body>
-    <form action="index.py" method="post">
+    <form id="input-form">
         <label for="link">Link address:</label>
         <input type="text" id="link" name="link"><br>
 
@@ -22,5 +22,38 @@
 
         <input type="submit" value="Generate URL">
     </form>
+
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('input-form');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const link = form.link.value.trim();
+            const title = form.title.value.trim();
+            const month = form.month.value.trim();
+            const day = form.day.value.trim();
+            const year = form.year.value.trim();
+
+            const url = normalizeUrl(title, year, month, day);
+
+            resultDiv.innerHTML = `<p>Your URL is:</p><p><a href="${url}">${url}</a></p>`;
+        });
+
+        function normalizeUrl(title, year, month, day) {
+            // Remove any non-alphanumeric characters from the title
+            title = title.replace(/\W+/g, ' ');
+            // Replace any remaining spaces with hyphens
+            title = title.replace(/\s+/g, '-');
+            // Convert the title to lowercase
+            title = title.toLowerCase();
+            // Construct the URL using the provided year, month, and day
+            url = `https://www.website.com/${year}/${month.padStart(2, '0')}/${day.padStart(2, '0')}/${title}/`;
+            return url;
+        }
+    </script>
 </body>
 </html>
