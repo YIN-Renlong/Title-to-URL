@@ -30,6 +30,28 @@ To use the URL Generator, simply input your domain address, article title, and s
 - Two URL format options: date or subdirectory
 - Form validation and error handling
 
+## Dechnical details
+
+```JavaScript
+{
+        // Replace any non-alphanumeric characters with a hyphen, except for apostrophes
+        title = title.replace(/[^\w\s']+/g, '-');
+        // Replace apostrophes with an empty string
+        title = title.replace(/'/g, '');
+        // Replace whitespace with a hyphen
+        title = title.replace(/\s+/g, '-');
+        // Remove any consecutive hyphens
+        title = title.replace(/--+/g, '-');
+        // Remove any leading or trailing hyphens
+        title = title.replace(/^-|-$/g, '');
+        // Convert the title to lowercase
+        title = title.toLowerCase();
+}
+```
+
+This code replaces non-alphanumeric characters with a hyphen, apostrophes with an empty string, whitespace with a hyphen, removes consecutive hyphens, removes leading and trailing hyphens, and converts the title to lowercase. It is typically used in URL normalization process.
+
+
 ## Example of Output
 
 An example of a generated URL using the "Use Date" option:
