@@ -5,7 +5,7 @@
 ![Jekyll Build](https://github.com/YIN-Renlong/Title-to-URL/actions/workflows/jekyll-gh-pages.yml/badge.svg)
 
 
-"Title to URL" is a web-based tool that helps users normalize URLs for their articles based on the title and date, designed with clean HTML, CSS, and JavaScript to create an easy-to-use user interface. The tool allows users to input the article title and select the month and day, and generates a normalized URL that follows the practices for URL structure and readability in popular CMS platforms (such as WordPress). The app allows users to input their domain address, article title, and choose between two options to generate a URL in a specific format. 
+"Title to URL" is a web-based tool that helps users to create and normalize URLs for their articles based on the title and date, designed with clean HTML, CSS, and JavaScript to create an easy-to-use user interface. The tool allows users to input the article title and select the month and day, and generates a normalized URL that follows the practices for URL structure and readability in popular CMS platforms (such as WordPress). The app allows users to input their domain address, article title, and choose between two options to generate a URL in a specific format. 
 
 ---
 
