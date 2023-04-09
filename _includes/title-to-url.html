@@ -89,16 +89,17 @@
             <label for="month">Month:</label>
             <select id="month" name="month">
                 {% for month in (1..12) %}
-                <option value="{{ month | prepend: '0' | slice: -2 }}">{{ month }}</option>
+                <option value="{{ month | string | padStart(2, '0') }}">{{ month }}</option>
                 {% endfor %}
             </select><br>
 
             <label for="day">Day:</label>
             <select id="day" name="day">
                 {% for day in (1..31) %}
-                <option value="{{ day | prepend: '0' | slice: -2 }}">{{ day }}</option>
+                <option value="{{ day | string | padStart(2, '0') }}">{{ day }}</option>
                 {% endfor %}
             </select><br>
+
 
             <input type="radio" id="useSubdirectory" name="option" value="subdirectory">
             <label for="useSubdirectory">Use Subdirectory</label><br>
