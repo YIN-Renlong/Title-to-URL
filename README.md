@@ -21,7 +21,7 @@ The two options are:
 
 ## Usage
 
-To use the URL Generator, simply input your domain address, article title, and select the preferred URL format option. Then, click the "Generate URL" button to display the generated URL on the page.
+To use the ["Title to URL" URL Generator](https://yin-renlong.github.io/Title-to-URL/), simply input your domain address, article title, and select the preferred URL format option. Then, click the "Generate URL" button to display the generated URL on the page.
 
 ## Features
 
@@ -74,3 +74,6 @@ This project is licensed under the [Apache 2.0 License](LICENSE).
 
 This app was created by by [[YIN Renlong](https://github.com/YIN-Renlong)]. - Feel free to use and modify this code for your projects, but please give credit to the original author.
 
+## Acknowledgement
+
+Thanks to the ["Architect" ](https://github.com/pages-themes/architect) theme for Github Page.
