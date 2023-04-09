@@ -1,4 +1,7 @@
 # Introduction of Title-to-URL Generator
+
+[![Visit GitHub Page](https://img.shields.io/badge/Visit-GitHub%20Page-blue?logo=github)]({{ site.url }})
+
 ![Jekyll Build](https://github.com/YIN-Renlong/Title-to-URL/actions/workflows/jekyll-gh-pages.yml/badge.svg)
 
 
